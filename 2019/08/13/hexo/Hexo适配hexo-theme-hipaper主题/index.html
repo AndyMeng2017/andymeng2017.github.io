@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Hexo适配hexo-theme-hipaper主题 | DaDa GOUGOU</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="Hexo">
+  
+  
+  
+  
+  <meta name="description" content="Hexo">
+<meta name="keywords" content="Hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo适配hexo-theme-hipaper主题">
+<meta property="og:url" content="http://andymeng2017.github.io/2019/08/13/hexo/Hexo适配hexo-theme-hipaper主题/index.html">
+<meta property="og:site_name" content="DaDa GOUGOU">
+<meta property="og:description" content="Hexo">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/539247-0f218c1489b3e567.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2021-06-10T09:07:44.988Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo适配hexo-theme-hipaper主题">
+<meta name="twitter:description" content="Hexo">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/539247-0f218c1489b3e567.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="DaDa GOUGOU" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/fashion.css">
+  <link rel="stylesheet" href="/css/glyphs.css">
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  
+  <div class="site-header-image">
+    <img id="originBg" width="100%" alt="Hike News" src="">
+  </div>
+
+  <div id="header-blur" class="site-header-image blur" style="position: absolute; top:0; height: 207px; min-height: 207px; min-width: 100%;">
+    <img id="blurBg" width="100%" style="top: 96%" alt="Hike News" src="">
+  </div>
+
+  <script>
+        var imgUrls = "css/images/pose01.jpg,https://source.unsplash.com/collection/954550/1920x1080,https://source.unsplash.com/collection/954550/1920x1081".split(",");
+        var random = Math.floor((Math.random() * imgUrls.length ));
+        if (imgUrls[random].startsWith('http') || imgUrls[random].indexOf('://') >= 0) {
+          document.getElementById("originBg").src=imgUrls[random];
+          document.getElementById("blurBg").src=imgUrls[random];
+        } else {
+          document.getElementById("originBg").src='/' + imgUrls[random];
+          document.getElementById("blurBg").src='/' + imgUrls[random];
+        }
+    </script>
+
+
+
+
+<header id="allheader" class="site-header" role="banner" 
+   style="width: 100%; position: absolute; top:0; background: rgba(255,255,255,.8);"  >
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="DaDa GOUGOU" rel="home"> DaDa GOUGOU </a>
+            
+          </h1>
+          
+          
+            <div class="site-description">How many roads must a man walk down.</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="/"> <a class="" href="/">Home</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="archives"> <a class="" href="/archives">Archives</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="categories"> <a class="" href="/categories">Categories</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="tags"> <a class="" href="/tags">Tags</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="about"> <a class="" href="/about">About</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-hexo/Hexo适配hexo-theme-hipaper主题" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+<div class="article-gallery">
+  <div class="article-gallery-photos">
+    
+      <a class="article-gallery-img fancybox" href="https://upload-images.jianshu.io/upload_images/539247-0f218c1489b3e567.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" rel="gallery_ckpqpzj4d0005a88cg22h8cyc">
+        <img src="https://upload-images.jianshu.io/upload_images/539247-0f218c1489b3e567.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" itemprop="image">
+      </a>
+    
+  </div>
+</div>
+
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Hexo适配hexo-theme-hipaper主题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/08/13/hexo/Hexo适配hexo-theme-hipaper主题/" class="article-date">
+	  <time datetime="2019-08-13T03:30:24.000Z" itemprop="datePublished">August 13, 2019</time>
+	</a>
+
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/blog/">blog</a>
+ 
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Hexo适配hexo-theme-hipaper主题"><a href="#Hexo适配hexo-theme-hipaper主题" class="headerlink" title="Hexo适配hexo-theme-hipaper主题"></a>Hexo适配hexo-theme-hipaper主题</h3><hr>
+<p><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">hexo官方网站</a></p>
+<blockquote>
+<ul>
+<li><a href="http://nodejs.org/" target="_blank" rel="noopener">Node.js</a> (Should be at least nodejs 6.9)</li>
+<li><a href="http://git-scm.com/" target="_blank" rel="noopener">Git</a></li>
+</ul>
+</blockquote>
+<h4 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h4><p>本地环境安装完毕后执行命令<code>hexo version</code>，查看是否成功</p>
+<a id="more"></a>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> hexo --version</span></span><br><span class="line">hexo-cli: 2.0.0</span><br><span class="line">os: Windows_NT 6.1.7601 win32 x64</span><br><span class="line">http_parser: 2.8.0</span><br><span class="line">node: 10.16.2</span><br><span class="line">v8: 6.8.275.32-node.54</span><br><span class="line">uv: 1.28.0</span><br><span class="line">zlib: 1.2.11</span><br><span class="line">brotli: 1.0.7</span><br><span class="line">ares: 1.15.0</span><br><span class="line">modules: 64</span><br><span class="line">nghttp2: 1.34.0</span><br><span class="line">napi: 4</span><br><span class="line">openssl: 1.1.1c</span><br><span class="line">icu: 64.2</span><br><span class="line">unicode: 12.1</span><br><span class="line">cldr: 35.1</span><br><span class="line">tz: 2019a</span><br></pre></td></tr></table></figure>
+
+<h4 id="建站"><a href="#建站" class="headerlink" title="建站"></a>建站</h4><p>这里可以理解为建立本地仓库环境</p>
+<p><code>folder</code>为指定的目录环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init &lt;folder&gt;</span><br><span class="line">$ cd &lt;folder&gt;</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+
+<p>新建完成后，指定文件夹的目录如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml</span><br><span class="line">├── package.json</span><br><span class="line">├── scaffolds</span><br><span class="line">├── source</span><br><span class="line">|   ├── _drafts</span><br><span class="line">|   └── _posts</span><br><span class="line">└── themes</span><br></pre></td></tr></table></figure>
+
+<p>更多命令见官方文档，挺全的</p>
+<h4 id="获取指定的主题"><a href="#获取指定的主题" class="headerlink" title="获取指定的主题"></a>获取指定的主题</h4><h5 id="Get-it-from-Github"><a href="#Get-it-from-Github" class="headerlink" title="Get it from Github"></a>Get it from Github</h5><p>在你<strong>建站</strong>指定的 <code>folder</code>目录</p>
+<p><code>$ git clone https://github.com/iTimeTraveler/hexo-theme-hipaper.git themes/hipaper</code></p>
+<h5 id="Enable-启用主题"><a href="#Enable-启用主题" class="headerlink" title="Enable 启用主题"></a>Enable 启用主题</h5><p>修改配置文件<code>_config.yml</code>的主题</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="comment">#默认主题</span></span><br><span class="line"><span class="comment">#theme: landscape</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">hipaper</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="Update-更新主题"><a href="#Update-更新主题" class="headerlink" title="Update 更新主题"></a>Update 更新主题</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ cd themes/hipaper</span><br><span class="line">$ git pull</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><blockquote>
+<p>针对根目录配置文件修的修改</p>
+</blockquote>
+<h5 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h5><p>安装 <a href="https://github.com/hexojs/hexo-deployer-git" target="_blank" rel="noopener">hexo-deployer-git</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`$ npm install hexo-deployer-git --save`</span><br></pre></td></tr></table></figure>
+
+<p>修改配置文件<code>_config.yml</code>的<code>Deployment</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/deployment.html</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository: https://github.com/AndyMeng2017/andymeng2017.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<h5 id="站点信息修改"><a href="#站点信息修改" class="headerlink" title="站点信息修改"></a>站点信息修改</h5><p>修改配置文件<code>_config.yml</code>的<code>Site</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># Site</span><br><span class="line">title: Andy Meng</span><br><span class="line">subtitle:</span><br><span class="line">description: How many roads must a man walk down.</span><br><span class="line">keywords:</span><br><span class="line">author: John Doe|Andy Meng</span><br><span class="line">language: en</span><br><span class="line">timezone:</span><br></pre></td></tr></table></figure>
+
+<hr>
+<blockquote>
+<p>针对主题目录下配置文件修的修改</p>
+</blockquote>
+<h5 id="logo图标"><a href="#logo图标" class="headerlink" title="logo图标"></a>logo图标</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># Put your avatar.jpg into `hexo-site/themes/hipaper/source/` directory.</span><br><span class="line"># url is target link (E.g. `url: https://hexo.io/logo.svg` or `url: css/images/mylogo.jpg`)</span><br><span class="line">avatar: </span><br><span class="line">  enable: true</span><br><span class="line">  width: 124</span><br><span class="line">  height: 124</span><br><span class="line">  bottom: 10</span><br><span class="line">  #url: https://hexo.io/logo.svg</span><br><span class="line">  url: css/images/mylogo.jpg</span><br></pre></td></tr></table></figure>
+
+<h5 id="社交信息"><a href="#社交信息" class="headerlink" title="社交信息"></a>社交信息</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># Social Links</span><br><span class="line"># Key is the name of FontAwsome icon.</span><br><span class="line"># Value is the target link (E.g. GitHub: https://github.com/iTimeTraveler)</span><br><span class="line">social:</span><br><span class="line">  Github: https://github.com/AndyMeng2017</span><br><span class="line">  Weibo: https://weibo.com/u/1962585291</span><br><span class="line">  Twitter: </span><br><span class="line">  Facebook: </span><br><span class="line">  Google-plus: </span><br><span class="line">  Instagram: </span><br><span class="line">  Pinterest: </span><br><span class="line">  Flickr: </span><br><span class="line">  email: 707093428@qq.com</span><br></pre></td></tr></table></figure>
+
+<h5 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># comment ShortName, you can choose only ONE to display.</span><br><span class="line">duoshuo_shortname: </span><br><span class="line">disqus_shortname: </span><br><span class="line">#livere_shortname: MTAyMC8yOTQ4MS82MDQ5</span><br><span class="line">livere_shortname: MTAyMC80NTk0OC8yMjQ1OQ==</span><br><span class="line">uyan_uid: </span><br><span class="line">wumii:</span><br></pre></td></tr></table></figure>
+
+<h5 id="不蒜子"><a href="#不蒜子" class="headerlink" title="不蒜子"></a>不蒜子</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># Miscellaneous</span><br><span class="line">google_analytics:</span><br><span class="line">gauges_analytics:</span><br><span class="line">baidu_analytics:</span><br><span class="line">tencent_analytics:</span><br><span class="line">busuanzi_analytics: true</span><br><span class="line">twitter:</span><br><span class="line">google_plus:</span><br><span class="line">fb_admins:</span><br><span class="line">fb_app_id:</span><br></pre></td></tr></table></figure>
+
+<p>模板里域名过期，需要修改</p>
+<p><code>themes\hipaper\layout\_partial\busuanzi-analytics.ejs</code>文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;% <span class="keyword">if</span> (theme.busuanzi_analytics)&#123; %&gt;</span><br><span class="line">	&lt;script <span class="keyword">async</span> src=<span class="string">"//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"</span>&gt;</span><br><span class="line">	&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">&lt;% &#125;%&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="CNZZ"><a href="#CNZZ" class="headerlink" title="CNZZ"></a>CNZZ</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># CNZZ count</span><br><span class="line"># cnzz_siteid: 1260716016</span><br><span class="line">cnzz_siteid: 1277912853</span><br></pre></td></tr></table></figure>
+
+<p>这里很尴尬的说，主题作者可能忘记删掉一些代码，故修改</p>
+<p>themes\hipaper\layout_partial\after-footer.ejs`文件，删掉一下信息</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=<span class="string">"display: none;"</span>&gt;</span><br><span class="line">  &lt;script src=<span class="string">"https://s11.cnzz.com/z_stat.php?id=1260716016&amp;web_id=1260716016"</span> language=<span class="string">"JavaScript"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="发布部署"><a href="#发布部署" class="headerlink" title="发布部署"></a>发布部署</h4><p>在根目录执行 <code>hexo g -d</code></p>
+<p>附件：</p>
+<p>评论插件截图，这软件很棒</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/539247-504a8fa0f87a4b24.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="hexo-1"></p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/blog/">blog</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li></ul>
+
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC80NTk0OC8yMjQ1OQ==">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/08/17/oracle/Oracle系列（一）日常sql语句/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Oracle系列（一）日常sql语句
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/08/09/post-title-with-whitespace/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">post title with whitespace</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo适配hexo-theme-hipaper主题"><span class="nav-number">1.</span> <span class="nav-text">Hexo适配hexo-theme-hipaper主题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#开始使用"><span class="nav-number">1.1.</span> <span class="nav-text">开始使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#建站"><span class="nav-number">1.2.</span> <span class="nav-text">建站</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取指定的主题"><span class="nav-number">1.3.</span> <span class="nav-text">获取指定的主题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Get-it-from-Github"><span class="nav-number">1.3.1.</span> <span class="nav-text">Get it from Github</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Enable-启用主题"><span class="nav-number">1.3.2.</span> <span class="nav-text">Enable 启用主题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Update-更新主题"><span class="nav-number">1.3.3.</span> <span class="nav-text">Update 更新主题</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置"><span class="nav-number">1.4.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#部署"><span class="nav-number">1.4.1.</span> <span class="nav-text">部署</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#站点信息修改"><span class="nav-number">1.4.2.</span> <span class="nav-text">站点信息修改</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#logo图标"><span class="nav-number">1.4.3.</span> <span class="nav-text">logo图标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#社交信息"><span class="nav-number">1.4.4.</span> <span class="nav-text">社交信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#评论"><span class="nav-number">1.4.5.</span> <span class="nav-text">评论</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#不蒜子"><span class="nav-number">1.4.6.</span> <span class="nav-text">不蒜子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CNZZ"><span class="nav-number">1.4.7.</span> <span class="nav-text">CNZZ</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#发布部署"><span class="nav-number">1.5.</span> <span class="nav-text">发布部署</span></a></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2021 DaDa GOUGOU All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+      var headerblur = document.getElementById("header-blur");
+      headerblur.style.minHeight = window.getComputedStyle(document.getElementById("allheader"), null).height;
+    
+    
+</script>
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1277912853&web_id=1277912853" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>

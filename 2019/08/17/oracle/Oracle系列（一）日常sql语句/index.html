@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Oracle系列（一）日常sql语句 | DaDa GOUGOU</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="oracle">
+  
+  
+  
+  
+  <meta name="description" content="日常语句记录 oracle">
+<meta name="keywords" content="oracle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle系列（一）日常sql语句">
+<meta property="og:url" content="http://andymeng2017.github.io/2019/08/17/oracle/Oracle系列（一）日常sql语句/index.html">
+<meta property="og:site_name" content="DaDa GOUGOU">
+<meta property="og:description" content="日常语句记录 oracle">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2021-06-10T09:07:44.989Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Oracle系列（一）日常sql语句">
+<meta name="twitter:description" content="日常语句记录 oracle">
+  
+    <link rel="alternate" href="/atom.xml" title="DaDa GOUGOU" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/fashion.css">
+  <link rel="stylesheet" href="/css/glyphs.css">
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  
+  <div class="site-header-image">
+    <img id="originBg" width="100%" alt="Hike News" src="">
+  </div>
+
+  <div id="header-blur" class="site-header-image blur" style="position: absolute; top:0; height: 207px; min-height: 207px; min-width: 100%;">
+    <img id="blurBg" width="100%" style="top: 96%" alt="Hike News" src="">
+  </div>
+
+  <script>
+        var imgUrls = "css/images/pose01.jpg,https://source.unsplash.com/collection/954550/1920x1080,https://source.unsplash.com/collection/954550/1920x1081".split(",");
+        var random = Math.floor((Math.random() * imgUrls.length ));
+        if (imgUrls[random].startsWith('http') || imgUrls[random].indexOf('://') >= 0) {
+          document.getElementById("originBg").src=imgUrls[random];
+          document.getElementById("blurBg").src=imgUrls[random];
+        } else {
+          document.getElementById("originBg").src='/' + imgUrls[random];
+          document.getElementById("blurBg").src='/' + imgUrls[random];
+        }
+    </script>
+
+
+
+
+<header id="allheader" class="site-header" role="banner" 
+   style="width: 100%; position: absolute; top:0; background: rgba(255,255,255,.8);"  >
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="DaDa GOUGOU" rel="home"> DaDa GOUGOU </a>
+            
+          </h1>
+          
+          
+            <div class="site-description">How many roads must a man walk down.</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="/"> <a class="" href="/">Home</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="archives"> <a class="" href="/archives">Archives</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="categories"> <a class="" href="/categories">Categories</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="tags"> <a class="" href="/tags">Tags</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="about"> <a class="" href="/about">About</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-oracle/Oracle系列（一）日常sql语句" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Oracle系列（一）日常sql语句
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/08/17/oracle/Oracle系列（一）日常sql语句/" class="article-date">
+	  <time datetime="2019-08-17T03:25:56.000Z" itemprop="datePublished">August 17, 2019</time>
+	</a>
+
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/blog/">blog</a>
+ 
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Oracle系列（一）日常sql语句"><a href="#Oracle系列（一）日常sql语句" class="headerlink" title="Oracle系列（一）日常sql语句"></a>Oracle系列（一）日常sql语句</h3><h5 id="查看表空间大小"><a href="#查看表空间大小" class="headerlink" title="查看表空间大小"></a>查看表空间大小</h5><a id="more"></a>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> b.file_id　　文件<span class="keyword">ID</span>,</span><br><span class="line">　　b.tablespace_name　　表空间,</span><br><span class="line">　　b.file_name　　　　　物理文件名,</span><br><span class="line">　　b.bytes/<span class="number">1024</span>/<span class="number">1024</span>/<span class="number">1024</span>　　　　　　　总字节数(GB),</span><br><span class="line">　　(b.bytes-<span class="keyword">sum</span>(nvl(a.bytes,<span class="number">0</span>)))　　　已使用,</span><br><span class="line">　　<span class="keyword">sum</span>(nvl(a.bytes,<span class="number">0</span>))　　　　　　　　剩余,</span><br><span class="line">　　<span class="keyword">sum</span>(nvl(a.bytes,<span class="number">0</span>))/(b.bytes)*<span class="number">100</span>　剩余百分比</span><br><span class="line"><span class="keyword">from</span> dba_free_space a,dba_data_files b</span><br><span class="line"><span class="keyword">where</span> a.file_id=b.file_id</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> b.tablespace_name,b.file_name,b.file_id,b.bytes</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> b.tablespace_name</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看表空间（方式二）"><a href="#查看表空间（方式二）" class="headerlink" title="查看表空间（方式二）"></a>查看表空间（方式二）</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--1G=1024MB </span></span><br><span class="line"><span class="comment">--1M=1024KB </span></span><br><span class="line"><span class="comment">--1K=1024Bytes </span></span><br><span class="line"><span class="comment">--1M=11048576Bytes </span></span><br><span class="line"><span class="comment">--1G=1024*11048576Bytes=11313741824Bytes </span></span><br><span class="line"><span class="keyword">SELECT</span> a.tablespace_name <span class="string">"表空间名"</span>, </span><br><span class="line">        total <span class="string">"表空间大小"</span>, </span><br><span class="line">        free <span class="string">"表空间剩余大小"</span>, </span><br><span class="line">        (total - free) <span class="string">"表空间使用大小"</span>, </span><br><span class="line">        total / (<span class="number">1024</span> * <span class="number">1024</span> * <span class="number">1024</span>) <span class="string">"表空间大小(G)"</span>, </span><br><span class="line">        free / (<span class="number">1024</span> * <span class="number">1024</span> * <span class="number">1024</span>) <span class="string">"表空间剩余大小(G)"</span>, </span><br><span class="line">        (total - free) / (<span class="number">1024</span> * <span class="number">1024</span> * <span class="number">1024</span>) <span class="string">"表空间使用大小(G)"</span>, </span><br><span class="line">        <span class="keyword">round</span>((total - free) / total, <span class="number">4</span>) * <span class="number">100</span> <span class="string">"使用率 %"</span> </span><br><span class="line"><span class="keyword">FROM</span> (<span class="keyword">SELECT</span> tablespace_name, <span class="keyword">SUM</span>(<span class="keyword">bytes</span>) free </span><br><span class="line"><span class="keyword">FROM</span> dba_free_space </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> tablespace_name) a, </span><br><span class="line">(<span class="keyword">SELECT</span> tablespace_name, <span class="keyword">SUM</span>(<span class="keyword">bytes</span>) total </span><br><span class="line"><span class="keyword">FROM</span> dba_data_files </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> tablespace_name) b </span><br><span class="line"><span class="keyword">WHERE</span> a.tablespace_name = b.tablespace_name</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看版本号"><a href="#查看版本号" class="headerlink" title="查看版本号"></a>查看版本号</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> v$<span class="keyword">version</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看可能出现oracle-ORA-01461-错误-can-bind-a-LONG-value-only-for-insert-into-a-LONG-column的表"><a href="#查看可能出现oracle-ORA-01461-错误-can-bind-a-LONG-value-only-for-insert-into-a-LONG-column的表" class="headerlink" title="查看可能出现oracle ORA-01461 错误 can bind a LONG value only for insert into a LONG column的表"></a>查看可能出现oracle ORA-01461 错误 can bind a LONG value only for insert into a LONG column的表</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> </span><br><span class="line">(<span class="keyword">SELECT</span> TABLE_NAME, OWNER, <span class="keyword">count</span>(*) <span class="keyword">NUM</span> </span><br><span class="line"><span class="keyword">FROM</span> DBA_TAB_COLUMNS </span><br><span class="line"><span class="keyword">WHERE</span> DATA_TYPE=<span class="string">'LONG'</span> </span><br><span class="line"><span class="keyword">OR</span> (( DATA_TYPE=<span class="string">'VARCHAR2'</span> </span><br><span class="line"><span class="keyword">or</span> DATA_TYPE=<span class="string">'CHAR'</span> </span><br><span class="line"><span class="keyword">or</span> DATA_TYPE=<span class="string">'NVARCHAR2'</span> </span><br><span class="line"><span class="keyword">or</span> DATA_TYPE=<span class="string">'NCHAR'</span>) </span><br><span class="line"><span class="keyword">AND</span> DATA_LENGTH &gt; <span class="number">1333</span>) </span><br><span class="line"><span class="keyword">AND</span> OWNER <span class="keyword">NOT</span> <span class="keyword">IN</span> </span><br><span class="line">(<span class="string">'SYS'</span>,<span class="string">'SYSTEM'</span>,<span class="string">'SH'</span>,<span class="string">'OLAPSYS'</span>,<span class="string">'MDSYS'</span>,<span class="string">'WKSYS'</span>,<span class="string">'ODM'</span>,<span class="string">'XDB'</span>,<span class="string">'WMSYS'</span>) </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> TABLE_NAME, OWNER) </span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">NUM</span> &gt; <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="user-tables-当前用户下所有的表"><a href="#user-tables-当前用户下所有的表" class="headerlink" title="user_tables(当前用户下所有的表)"></a>user_tables(当前用户下所有的表)</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">count</span>(*) <span class="keyword">from</span> user_tables;</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看所有用户"><a href="#查看所有用户" class="headerlink" title="查看所有用户"></a>查看所有用户</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">distinct</span> owner <span class="keyword">from</span> all_objects;</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看当前用户表空间"><a href="#查看当前用户表空间" class="headerlink" title="查看当前用户表空间"></a>查看当前用户表空间</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> default_tablespace <span class="keyword">from</span> dba_users <span class="keyword">where</span> username=<span class="string">'PINGAN_OPENAPI'</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="授予LNCHDPSQP可以查看SYNCHRO-PRODUCE-TIME-TEST"><a href="#授予LNCHDPSQP可以查看SYNCHRO-PRODUCE-TIME-TEST" class="headerlink" title="授予LNCHDPSQP可以查看SYNCHRO_PRODUCE_TIME_TEST"></a>授予LNCHDPSQP可以查看SYNCHRO_PRODUCE_TIME_TEST</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">grant</span> <span class="keyword">select</span> <span class="keyword">on</span> SYNCHRO_PRODUCE_TIME_TEST <span class="keyword">to</span> LNCHDPSQP;</span><br></pre></td></tr></table></figure>
+
+<h5 id="清空表"><a href="#清空表" class="headerlink" title="清空表"></a>清空表</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">truncate</span> <span class="keyword">table</span> **</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看连接数"><a href="#查看连接数" class="headerlink" title="查看连接数"></a>查看连接数</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">count</span>(*) <span class="keyword">from</span> v$<span class="keyword">session</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="大数据批量更新"><a href="#大数据批量更新" class="headerlink" title="大数据批量更新"></a>大数据批量更新</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span></span><br><span class="line"> <span class="keyword">cursor</span> cur <span class="keyword">is</span><span class="comment">--声明游标cur</span></span><br><span class="line"> <span class="keyword">select</span> B.<span class="string">"big_name"</span>, A.<span class="string">"UUID"</span> ROW_ID</span><br><span class="line">  <span class="keyword">FROM</span> STATISTICS_REAL_TIME_ANALYSIS A ,<span class="string">"HCICLOUD"</span>.<span class="string">"big_small_temp"</span> B</span><br><span class="line">  <span class="keyword">WHERE</span> A.<span class="string">"KEY"</span>=B.<span class="string">"small_name"</span></span><br><span class="line">  <span class="keyword">ORDER</span> <span class="keyword">BY</span> A.<span class="string">"UUID"</span>;<span class="comment">--从A和B表中找到ID对应的openid，并对游标内数组排序</span></span><br><span class="line"> V_COUNTER NUMBER;<span class="comment">--声明一个number类型的变量</span></span><br><span class="line"><span class="keyword">BEGIN</span> </span><br><span class="line">V_COUNTER:=<span class="number">0</span>;<span class="comment">--初始化变量值为0</span></span><br><span class="line"> FOR ROW IN CUR LOOP<span class="comment">--遍历游标</span></span><br><span class="line">  <span class="keyword">UPDATE</span> STATISTICS_REAL_TIME_ANALYSIS A <span class="keyword">SET</span> A.<span class="string">"BIG_KEY"</span>=ROW.<span class="string">"big_name"</span> <span class="keyword">WHERE</span> A.<span class="string">"UUID"</span>=ROW.ROW_ID;</span><br><span class="line">    V_COUNTER:=V_COUNTER+1;<span class="comment">--每次循环变量值+1</span></span><br><span class="line">  IF(V_COUNTER&gt;=1000) THEN</span><br><span class="line">    <span class="keyword">COMMIT</span>;</span><br><span class="line">    V_COUNTER:=0;<span class="comment">--每更新1000行，V_COUNTER值为1000时候，就提交给数据库,提交后将变量归零，继续下一个1000行更新</span></span><br><span class="line">  <span class="keyword">END</span> <span class="keyword">IF</span>;</span><br><span class="line"> <span class="keyword">END</span> <span class="keyword">LOOP</span>;</span><br><span class="line">  <span class="keyword">COMMIT</span>;</span><br><span class="line"><span class="keyword">END</span>;</span><br><span class="line"></span><br><span class="line">注意：关联字段A."KEY" 和 A."UUID" 一定要加索引</span><br><span class="line">测试结果：152w(8s)</span><br><span class="line"></span><br><span class="line">单表更新</span><br><span class="line"><span class="keyword">declare</span></span><br><span class="line"> <span class="keyword">cursor</span> cur <span class="keyword">is</span><span class="comment">--声明游标cur</span></span><br><span class="line"> <span class="keyword">SELECT</span> <span class="keyword">UUID</span> <span class="keyword">FROM</span> SEND_SUCCESS_LOG;</span><br><span class="line"> V_COUNTER NUMBER;<span class="comment">--声明一个number类型的变量</span></span><br><span class="line"><span class="keyword">BEGIN</span> </span><br><span class="line">V_COUNTER:=<span class="number">0</span>;<span class="comment">--初始化变量值为0</span></span><br><span class="line"> FOR ROW IN CUR LOOP<span class="comment">--遍历游标</span></span><br><span class="line">  <span class="keyword">UPDATE</span> SEND_SUCCESS_LOG A <span class="keyword">SET</span> A.<span class="string">"VERSION"</span>=<span class="number">0</span> <span class="keyword">WHERE</span> A.<span class="string">"UUID"</span>=ROW.UUID;</span><br><span class="line">    V_COUNTER:=V_COUNTER+1;<span class="comment">--每次循环变量值+1</span></span><br><span class="line">  IF(V_COUNTER&gt;=1000) THEN</span><br><span class="line">    <span class="keyword">COMMIT</span>;</span><br><span class="line">    V_COUNTER:=0;<span class="comment">--每更新1000行，V_COUNTER值为1000时候，就提交给数据库,提交后将变量归零，继续下一个1000行更新</span></span><br><span class="line">  <span class="keyword">END</span> <span class="keyword">IF</span>;</span><br><span class="line"> <span class="keyword">END</span> <span class="keyword">LOOP</span>;</span><br><span class="line">  <span class="keyword">COMMIT</span>;</span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看USERS表空间的全部索引，同时排序"><a href="#查看USERS表空间的全部索引，同时排序" class="headerlink" title="查看USERS表空间的全部索引，同时排序"></a>查看USERS表空间的全部索引，同时排序</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> segment_name,tablespace_name,<span class="keyword">bytes</span> B, <span class="keyword">bytes</span>/<span class="number">1024</span> KB, <span class="keyword">bytes</span>/<span class="number">1024</span>/<span class="number">1024</span> MB <span class="keyword">from</span> user_segments <span class="keyword">where</span> segment_type=<span class="string">'INDEX'</span> <span class="keyword">and</span> tablespace_name=<span class="string">'USERS'</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">bytes</span> <span class="keyword">desc</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看USERS表空间的全部表，同时排序"><a href="#查看USERS表空间的全部表，同时排序" class="headerlink" title="查看USERS表空间的全部表，同时排序"></a>查看USERS表空间的全部表，同时排序</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> segment_name,tablespace_name,<span class="keyword">bytes</span> B, <span class="keyword">bytes</span>/<span class="number">1024</span> KB, <span class="keyword">bytes</span>/<span class="number">1024</span>/<span class="number">1024</span> MB <span class="keyword">from</span> user_segments <span class="keyword">where</span> segment_type=<span class="string">'TABLE'</span> <span class="keyword">and</span> tablespace_name=<span class="string">'USERS'</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">bytes</span> <span class="keyword">desc</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看表所在的表空间"><a href="#查看表所在的表空间" class="headerlink" title="查看表所在的表空间"></a>查看表所在的表空间</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> tablespace_name,table_name  <span class="keyword">from</span> user_tables <span class="keyword">where</span> table_name=<span class="string">'STATISTICS_REAL_TIME_ANALYSIS'</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看USERS表空间下的表"><a href="#查看USERS表空间下的表" class="headerlink" title="查看USERS表空间下的表"></a>查看USERS表空间下的表</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> TABLE_NAME,TABLESPACE_NAME <span class="keyword">from</span> dba_tables <span class="keyword">where</span> TABLESPACE_NAME=<span class="string">'USERS'</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看STATISTICS-REAL-TIME-ANALYSIS表占用的大小"><a href="#查看STATISTICS-REAL-TIME-ANALYSIS表占用的大小" class="headerlink" title="查看STATISTICS_REAL_TIME_ANALYSIS表占用的大小"></a>查看STATISTICS_REAL_TIME_ANALYSIS表占用的大小</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> t.segment_name, t.segment_type, <span class="keyword">sum</span>(t.bytes / <span class="number">1024</span> / <span class="number">1024</span>) <span class="string">"占用空间(M)"</span></span><br><span class="line"><span class="keyword">from</span> dba_segments t</span><br><span class="line"><span class="keyword">where</span> t.segment_type=<span class="string">'TABLE'</span></span><br><span class="line"><span class="keyword">and</span> t.segment_name=<span class="string">'STATISTICS_REAL_TIME_ANALYSIS'</span></span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> OWNER, t.segment_name, t.segment_type;</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看USERS表空间下的表的大小"><a href="#查看USERS表空间下的表的大小" class="headerlink" title="查看USERS表空间下的表的大小"></a>查看USERS表空间下的表的大小</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> segment_name,tablespace_name,<span class="keyword">bytes</span> B, <span class="keyword">bytes</span>/<span class="number">1024</span> KB, <span class="keyword">bytes</span>/<span class="number">1024</span>/<span class="number">1024</span> MB </span><br><span class="line"><span class="keyword">from</span> user_segments </span><br><span class="line"><span class="keyword">where</span> segment_type=<span class="string">'TABLE'</span> <span class="keyword">and</span> tablespace_name=<span class="string">'USERS'</span> </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">bytes</span> <span class="keyword">desc</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看TS-JIETONG-INFO表空间下索引大小"><a href="#查看TS-JIETONG-INFO表空间下索引大小" class="headerlink" title="查看TS_JIETONG_INFO表空间下索引大小"></a>查看TS_JIETONG_INFO表空间下索引大小</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> segment_name,tablespace_name,<span class="keyword">bytes</span> B, <span class="keyword">bytes</span>/<span class="number">1024</span> KB, <span class="keyword">bytes</span>/<span class="number">1024</span>/<span class="number">1024</span> MB </span><br><span class="line"><span class="keyword">from</span> user_segments </span><br><span class="line"><span class="keyword">where</span> segment_type=<span class="string">'INDEX'</span> <span class="keyword">and</span> tablespace_name=<span class="string">'TS_JIETONG_INFO'</span> </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">bytes</span> <span class="keyword">desc</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="迁移索引‘INDEX-JANUARY-CALL-ID’到新表空间"><a href="#迁移索引‘INDEX-JANUARY-CALL-ID’到新表空间" class="headerlink" title="迁移索引‘INDEX_JANUARY_CALL_ID’到新表空间"></a>迁移索引‘INDEX_JANUARY_CALL_ID’到新表空间</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">index</span> INDEX_JANUARY_CALL_ID <span class="keyword">rebuild</span> <span class="keyword">tablespace</span> TS_JIETONG_INFO;</span><br></pre></td></tr></table></figure>
+
+<h5 id="迁移表‘STATISTICS-TA-ANALYSIS’到新表空间"><a href="#迁移表‘STATISTICS-TA-ANALYSIS’到新表空间" class="headerlink" title="迁移表‘STATISTICS_TA_ANALYSIS’到新表空间"></a>迁移表‘STATISTICS_TA_ANALYSIS’到新表空间</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> STATISTICS_TA_ANALYSIS <span class="keyword">move</span> <span class="keyword">tablespace</span> TS_JIETONG_INFO;</span><br></pre></td></tr></table></figure>
+
+<h5 id="查看索引状态"><a href="#查看索引状态" class="headerlink" title="查看索引状态"></a>查看索引状态</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> OWNER, INDEX_NAME,<span class="keyword">STATUS</span>  <span class="keyword">FROM</span> ALL_INDEXES <span class="keyword">WHERE</span> INDEX_NAME=<span class="string">'INDEX_APR'</span>;</span><br></pre></td></tr></table></figure>
+
+<h5 id="新建索引"><a href="#新建索引" class="headerlink" title="新建索引"></a>新建索引</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">index</span> HW_AGENTINFO_AGENTID <span class="keyword">on</span> T_HW_AGENTINFO(AGENTID) <span class="keyword">tablespace</span> TS_JIETONG_INFO;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">index</span> INDEX_APRIL_AGENTID <span class="keyword">on</span> CALL_APRIL_HISTORY(AGENTID,CALL_PHONE) <span class="keyword">tablespace</span> TS_JIETONG_INFO;</span><br></pre></td></tr></table></figure>
+
+<h5 id="case-when-使用"><a href="#case-when-使用" class="headerlink" title="case-when 使用"></a>case-when 使用</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">	<span class="keyword">MOD</span> (TO_CHAR(<span class="keyword">SYSDATE</span>, <span class="string">'ss'</span>), <span class="number">2</span>) <span class="keyword">AS</span> i,</span><br><span class="line">	<span class="keyword">COUNT</span> (*)</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">	SEND_ACCESS_LOG</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	OPEN_API_CREATE_TIME <span class="keyword">BETWEEN</span> <span class="keyword">TO_DATE</span> (</span><br><span class="line">		<span class="keyword">SYSDATE</span> <span class="comment">-- 			'2019-06-04 00:00:00',</span></span><br><span class="line">		<span class="comment">-- 			'yyyy-mm-dd hh24:mi:ss'</span></span><br><span class="line">	)</span><br><span class="line"><span class="keyword">AND</span> <span class="keyword">TO_DATE</span> (</span><br><span class="line">	<span class="keyword">SYSDATE</span> + <span class="number">1</span> <span class="comment">-- 		'2019-06-05 00:00:00',</span></span><br><span class="line">	<span class="comment">-- 		'yyyy-mm-dd hh24:mi:ss'</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">AND</span> (</span><br><span class="line">	(</span><br><span class="line">		<span class="keyword">MOD</span> (TO_CHAR(<span class="keyword">SYSDATE</span>, <span class="string">'ss'</span>), <span class="number">2</span>) = <span class="string">'0'</span></span><br><span class="line">		<span class="keyword">AND</span> SUCCESSSEND_CODE = <span class="string">'0'</span></span><br><span class="line">	)</span><br><span class="line">	<span class="keyword">OR</span> (</span><br><span class="line">		<span class="keyword">MOD</span> (TO_CHAR(<span class="keyword">SYSDATE</span>, <span class="string">'ss'</span>), <span class="number">2</span>) = <span class="string">'1'</span> <span class="comment">-- 		AND SUCCESSSEND_CODE IS NULL</span></span><br><span class="line">	)</span><br><span class="line">) <span class="comment">-- (</span></span><br><span class="line"><span class="comment">-- 	CASE</span></span><br><span class="line"><span class="comment">-- 	WHEN MOD (TO_CHAR(SYSDATE, 'ss'), 2) = '0' THEN</span></span><br><span class="line"><span class="comment">-- 		'0'</span></span><br><span class="line"><span class="comment">-- 	ELSE</span></span><br><span class="line"><span class="comment">-- 		null</span></span><br><span class="line"><span class="comment">-- 	END</span></span><br><span class="line"><span class="comment">-- )</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="按照时间月份分组查询"><a href="#按照时间月份分组查询" class="headerlink" title="按照时间月份分组查询"></a>按照时间月份分组查询</h5><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">	TO_CHAR (CREATE_TIME, <span class="string">'yyyy-mm'</span>) <span class="built_in">time</span>,</span><br><span class="line">	<span class="keyword">COUNT</span> (*)</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">	STATISTICS_REAL_TIME_ANALYSIS</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span></span><br><span class="line">	TO_CHAR (CREATE_TIME, <span class="string">'yyyy-mm'</span>)</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span></span><br><span class="line">	<span class="built_in">time</span>;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/blog/">blog</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oracle/">oracle</a></li></ul>
+
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC80NTk0OC8yMjQ1OQ==">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/08/17/mysql/mysql系列（一）balabala/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          mysql系列（一）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/08/13/hexo/Hexo适配hexo-theme-hipaper主题/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hexo适配hexo-theme-hipaper主题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Oracle系列（一）日常sql语句"><span class="nav-number">1.</span> <span class="nav-text">Oracle系列（一）日常sql语句</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查看表空间大小"><span class="nav-number">1.0.1.</span> <span class="nav-text">查看表空间大小</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看表空间（方式二）"><span class="nav-number">1.0.2.</span> <span class="nav-text">查看表空间（方式二）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看版本号"><span class="nav-number">1.0.3.</span> <span class="nav-text">查看版本号</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看可能出现oracle-ORA-01461-错误-can-bind-a-LONG-value-only-for-insert-into-a-LONG-column的表"><span class="nav-number">1.0.4.</span> <span class="nav-text">查看可能出现oracle ORA-01461 错误 can bind a LONG value only for insert into a LONG column的表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#user-tables-当前用户下所有的表"><span class="nav-number">1.0.5.</span> <span class="nav-text">user_tables(当前用户下所有的表)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看所有用户"><span class="nav-number">1.0.6.</span> <span class="nav-text">查看所有用户</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看当前用户表空间"><span class="nav-number">1.0.7.</span> <span class="nav-text">查看当前用户表空间</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#授予LNCHDPSQP可以查看SYNCHRO-PRODUCE-TIME-TEST"><span class="nav-number">1.0.8.</span> <span class="nav-text">授予LNCHDPSQP可以查看SYNCHRO_PRODUCE_TIME_TEST</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#清空表"><span class="nav-number">1.0.9.</span> <span class="nav-text">清空表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看连接数"><span class="nav-number">1.0.10.</span> <span class="nav-text">查看连接数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#大数据批量更新"><span class="nav-number">1.0.11.</span> <span class="nav-text">大数据批量更新</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看USERS表空间的全部索引，同时排序"><span class="nav-number">1.0.12.</span> <span class="nav-text">查看USERS表空间的全部索引，同时排序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看USERS表空间的全部表，同时排序"><span class="nav-number">1.0.13.</span> <span class="nav-text">查看USERS表空间的全部表，同时排序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看表所在的表空间"><span class="nav-number">1.0.14.</span> <span class="nav-text">查看表所在的表空间</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看USERS表空间下的表"><span class="nav-number">1.0.15.</span> <span class="nav-text">查看USERS表空间下的表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看STATISTICS-REAL-TIME-ANALYSIS表占用的大小"><span class="nav-number">1.0.16.</span> <span class="nav-text">查看STATISTICS_REAL_TIME_ANALYSIS表占用的大小</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看USERS表空间下的表的大小"><span class="nav-number">1.0.17.</span> <span class="nav-text">查看USERS表空间下的表的大小</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看TS-JIETONG-INFO表空间下索引大小"><span class="nav-number">1.0.18.</span> <span class="nav-text">查看TS_JIETONG_INFO表空间下索引大小</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#迁移索引‘INDEX-JANUARY-CALL-ID’到新表空间"><span class="nav-number">1.0.19.</span> <span class="nav-text">迁移索引‘INDEX_JANUARY_CALL_ID’到新表空间</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#迁移表‘STATISTICS-TA-ANALYSIS’到新表空间"><span class="nav-number">1.0.20.</span> <span class="nav-text">迁移表‘STATISTICS_TA_ANALYSIS’到新表空间</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看索引状态"><span class="nav-number">1.0.21.</span> <span class="nav-text">查看索引状态</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#新建索引"><span class="nav-number">1.0.22.</span> <span class="nav-text">新建索引</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#case-when-使用"><span class="nav-number">1.0.23.</span> <span class="nav-text">case-when 使用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#按照时间月份分组查询"><span class="nav-number">1.0.24.</span> <span class="nav-text">按照时间月份分组查询</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2021 DaDa GOUGOU All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+      var headerblur = document.getElementById("header-blur");
+      headerblur.style.minHeight = window.getComputedStyle(document.getElementById("allheader"), null).height;
+    
+    
+</script>
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1277912853&web_id=1277912853" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>

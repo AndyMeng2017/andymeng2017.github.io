@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Spring Boot系列（二）Spring-data-jpa 事务机制 | DaDa GOUGOU</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  <meta name="keywords" content="springbootjpa">
+  
+  
+  
+  
+  <meta name="description" content="spring-data-jpa使用实践">
+<meta name="keywords" content="springboot,jpa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Boot系列（二）Spring-data-jpa 事务机制">
+<meta property="og:url" content="http://andymeng2017.github.io/2019/08/26/spring boot/Spring Boot系列（二）Spring-data-jpa事务机制/index.html">
+<meta property="og:site_name" content="DaDa GOUGOU">
+<meta property="og:description" content="spring-data-jpa使用实践">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/539247-37d0da9acf154478.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2021-06-10T09:07:44.990Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Boot系列（二）Spring-data-jpa 事务机制">
+<meta name="twitter:description" content="spring-data-jpa使用实践">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/539247-37d0da9acf154478.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="DaDa GOUGOU" type="application/atom+xml">
+  
+  <link rel="icon" href="/css/images/favicon.ico">
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
+  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <style type="text/css">
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
+    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
+    
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+
+  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script src="/js/jquery-3.1.1.min.js"></script>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/fashion.css">
+  <link rel="stylesheet" href="/css/glyphs.css">
+
+</head>
+</html>
+
+
+  <body data-spy="scroll" data-target="#toc" data-offset="50">
+
+
+  
+  
+  <div class="site-header-image">
+    <img id="originBg" width="100%" alt="Hike News" src="">
+  </div>
+
+  <div id="header-blur" class="site-header-image blur" style="position: absolute; top:0; height: 207px; min-height: 207px; min-width: 100%;">
+    <img id="blurBg" width="100%" style="top: 96%" alt="Hike News" src="">
+  </div>
+
+  <script>
+        var imgUrls = "css/images/pose01.jpg,https://source.unsplash.com/collection/954550/1920x1080,https://source.unsplash.com/collection/954550/1920x1081".split(",");
+        var random = Math.floor((Math.random() * imgUrls.length ));
+        if (imgUrls[random].startsWith('http') || imgUrls[random].indexOf('://') >= 0) {
+          document.getElementById("originBg").src=imgUrls[random];
+          document.getElementById("blurBg").src=imgUrls[random];
+        } else {
+          document.getElementById("originBg").src='/' + imgUrls[random];
+          document.getElementById("blurBg").src='/' + imgUrls[random];
+        }
+    </script>
+
+
+
+
+<header id="allheader" class="site-header" role="banner" 
+   style="width: 100%; position: absolute; top:0; background: rgba(255,255,255,.8);"  >
+  <div class="clearfix container">
+      <div class="site-branding">
+
+          <h1 class="site-title">
+            
+              <a href="/" title="DaDa GOUGOU" rel="home"> DaDa GOUGOU </a>
+            
+          </h1>
+          
+          
+            <div class="site-description">How many roads must a man walk down.</div>
+          
+            
+          <nav id="main-navigation" class="main-navigation" role="navigation">
+            <a class="nav-open">Menu</a>
+            <a class="nav-close">Close</a>
+
+            <div class="clearfix sf-menu">
+              <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="/"> <a class="" href="/">Home</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="archives"> <a class="" href="/archives">Archives</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="categories"> <a class="" href="/categories">Categories</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="tags"> <a class="" href="/tags">Tags</a> </li>
+                    
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663" linktext="about"> <a class="" href="/about">About</a> </li>
+                    
+              </ul>
+            </div>
+          </nav>
+
+      </div>
+  </div>
+</header>
+
+
+  <div id="container">
+    <div id="wrap">
+            
+      <div id="content" class="outer">
+        
+          <section id="main" style="float:none;"><article id="post-spring boot/Spring Boot系列（二）Spring-data-jpa事务机制" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" class="article-title" itemprop="name">
+      Spring Boot系列（二）Spring-data-jpa 事务机制
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2019/08/26/spring boot/Spring Boot系列（二）Spring-data-jpa事务机制/" class="article-date">
+	  <time datetime="2019-08-26T11:35:16.000Z" itemprop="datePublished">August 26, 2019</time>
+	</a>
+
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/blog/">blog</a>
+ 
+      
+	<span id="busuanzi_container_page_pv">
+	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+	</span>
+
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Spring-data-jpa-事务机制"><a href="#Spring-data-jpa-事务机制" class="headerlink" title="Spring-data-jpa 事务机制"></a>Spring-data-jpa 事务机制</h2><h3 id="什么是事务？"><a href="#什么是事务？" class="headerlink" title="什么是事务？"></a>什么是事务？</h3><p>我们在开发企业应用时，对于业务人员的一个操作实际是对数据读写的多步操作的结合。由于数据操作在顺序执行的过程中，任何一步操作都有可能发生异常，异常会导致后续操作无法完成，此时由于业务逻辑并未正确的完成，之前成功操作数据的并不可靠，需要在这种情况下进行回退。</p>
+<p>事务的作用就是为了保证用户的每一个操作都是可靠的，事务中的每一步操作都必须成功执行，只要有发生异常就回退到事务开始未进行操作的状态。</p>
+<p>事务管理是Spring框架中最为常用的功能之一，我们在使用Spring Boot开发应用时，大部分情况下也都需要使用事务。</p>
+<h3 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h3><p>在Spring Boot中，当我们使用了spring-boot-starter-jdbc或spring-boot-starter-data-jpa依赖的时候，框架会自动默认分别注入DataSourceTransactionManager或JpaTransactionManager。所以我们不需要任何额外配置就可以用@Transactional注解进行事务的使用。</p>
+<a id="more"></a>
+
+<h4 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sinovoice.hcicloud.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sinovoice.hcicloud.dto.SendSuccessLog;</span><br><span class="line"><span class="keyword">import</span> com.sinovoice.hcicloud.service.repository.SendSuccessLogRepository;</span><br><span class="line"><span class="keyword">import</span> com.sinovoice.hcicloud.web.controller.metrics.DemoController;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.test.context.SpringBootTest;</span><br><span class="line"><span class="keyword">import</span> org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 测试的时候，要注释掉 MyConstraintValidator#helloService 依赖，不然会失败</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: mhn</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2019/6/19 22:49</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Version</span> 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Software</span>: IntelliJ IDEA</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner.class)</span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SendSuccessLogServiceJpaTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SendSuccessLogServiceJpa sendSuccessLogServiceJpa;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">query</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        SendSuccessLog sendSuccessLog = sendSuccessLogServiceJpa.getSysConfig(<span class="string">"8a80805e6ca8b9bd016ca8b9f4ee0000"</span>);</span><br><span class="line">        System.err.println(sendSuccessLog.getVersion());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        SendSuccessLog sendSuccessLog = sendSuccessLogServiceJpa.getSysConfig(<span class="string">"8a80805e6ca8b9bd016ca8b9f4ee0000"</span>);</span><br><span class="line">        sendSuccessLog.setRemark1(<span class="string">"0"</span>);</span><br><span class="line">        System.err.println(<span class="string">"开始保存"</span>);</span><br><span class="line">        sendSuccessLogServiceJpa.saveSysConfig(sendSuccessLog);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update1</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        SendSuccessLog sendSuccessLog = sendSuccessLogServiceJpa.getSysConfig(<span class="string">"8a80805e6ca8b9bd016ca8b9f4ee0000"</span>);</span><br><span class="line">        sendSuccessLog.setRemark1(<span class="string">"1"</span>);</span><br><span class="line">        System.err.println(<span class="string">"开始保存"</span>);</span><br><span class="line">        sendSuccessLogServiceJpa.testSysConfig1(sendSuccessLog);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update2</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        SendSuccessLog sendSuccessLog = sendSuccessLogServiceJpa.getSysConfig(<span class="string">"8a80805e6ca8b9bd016ca8b9f4ee0000"</span>);</span><br><span class="line">        sendSuccessLog.setRemark1(<span class="string">"2"</span>);</span><br><span class="line">        System.err.println(<span class="string">"开始保存"</span>);</span><br><span class="line">        sendSuccessLogServiceJpa.testSysConfig2(sendSuccessLog);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update4</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        SendSuccessLog sendSuccessLog = sendSuccessLogServiceJpa.getSysConfig(<span class="string">"8a80805e6ca8b9bd016ca8b9f4ee0000"</span>);</span><br><span class="line">        sendSuccessLog.setRemark1(<span class="string">"5"</span>);</span><br><span class="line">        System.err.println(<span class="string">"开始保存"</span>);</span><br><span class="line">        sendSuccessLogServiceJpa.testSysConfig4(sendSuccessLog);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建实体"><a href="#创建实体" class="headerlink" title="创建实体"></a>创建实体</h4><p>略</p>
+<h4 id="创建数据访问接口"><a href="#创建数据访问接口" class="headerlink" title="创建数据访问接口"></a>创建数据访问接口</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sinovoice.hcicloud.service.repository;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sinovoice.hcicloud.dto.SendSuccessLog;</span><br><span class="line"><span class="keyword">import</span> com.sinovoice.hcicloud.dto.User;</span><br><span class="line"><span class="keyword">import</span> com.sinovoice.hcicloud.web.aspect.ExceptionRetry;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.jpa.repository.JpaRepository;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.jpa.repository.Modifying;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.jpa.repository.Query;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.repository.query.Param;</span><br><span class="line"><span class="keyword">import</span> org.springframework.orm.ObjectOptimisticLockingFailureException;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Repository;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: mhn</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2019/6/19 23:11</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Version</span> 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Software</span>: IntelliJ IDEA</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SendSuccessLogRepository</span> <span class="keyword">extends</span> <span class="title">JpaRepository</span>&lt;<span class="title">SendSuccessLog</span>, <span class="title">String</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">SendSuccessLog <span class="title">findByBusinessId</span><span class="params">(String businessId)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="定义service层接口"><a href="#定义service层接口" class="headerlink" title="定义service层接口"></a>定义service层接口</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sinovoice.hcicloud.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sinovoice.hcicloud.dto.SendSuccessLog;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: mhn</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2019/7/9 18:09</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Version</span> 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Software</span>: IntelliJ IDEA</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SendSuccessLogServiceJpa</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> SendSuccessLog <span class="title">getSysConfig</span><span class="params">(String uuid)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> SendSuccessLog <span class="title">saveSysConfig</span><span class="params">(SendSuccessLog entity)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSysConfig1</span><span class="params">(SendSuccessLog entity)</span> <span class="keyword">throws</span> Exception</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSysConfig2</span><span class="params">(SendSuccessLog entity)</span> <span class="keyword">throws</span> Exception</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSysConfig3</span><span class="params">(SendSuccessLog entity)</span> <span class="keyword">throws</span> Exception</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSysConfig4</span><span class="params">(SendSuccessLog entity)</span> <span class="keyword">throws</span> Exception</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSysConfig5</span><span class="params">(SendSuccessLog entity)</span> <span class="keyword">throws</span> Exception</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="定义service层接口实现"><a href="#定义service层接口实现" class="headerlink" title="定义service层接口实现"></a>定义service层接口实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.sinovoice.hcicloud.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sinovoice.hcicloud.dto.SendSuccessLog;</span><br><span class="line"><span class="keyword">import</span> com.sinovoice.hcicloud.service.SendSuccessLogServiceJpa;</span><br><span class="line"><span class="keyword">import</span> com.sinovoice.hcicloud.service.repository.SendSuccessLogRepository;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"><span class="keyword">import</span> org.springframework.transaction.annotation.Transactional;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.Optional;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Author</span>: mhn</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span>: 2019/7/9 18:10</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Version</span> 1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Software</span>: IntelliJ IDEA</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SendSuccessLogServiceJpaImpl</span> <span class="keyword">implements</span> <span class="title">SendSuccessLogServiceJpa</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SendSuccessLogRepository sendSuccessLogRepository;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> SendSuccessLog <span class="title">getSysConfig</span><span class="params">(String uuid)</span> </span>&#123;</span><br><span class="line">        Optional&lt;SendSuccessLog&gt; sendSuccessLogOptional = sendSuccessLogRepository.findById(uuid);</span><br><span class="line">        <span class="keyword">return</span> sendSuccessLogOptional.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> SendSuccessLog <span class="title">saveSysConfig</span><span class="params">(SendSuccessLog entity)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(entity.getOpenApiCreateTime()==<span class="keyword">null</span>)&#123;</span><br><span class="line">            entity.setOpenApiCreateTime(<span class="keyword">new</span> Date());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sendSuccessLogRepository.save(entity);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 不会回滚</span></span><br><span class="line"><span class="comment">     * 由于 <span class="doctag">@Transactional</span> 注解默认不捕获 检查性异常</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> entity</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSysConfig1</span><span class="params">(SendSuccessLog entity)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.saveSysConfig(entity);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"sysconfig error"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * =================================== 一个方法调用另一个方法（一） ================================</span></span><br><span class="line"><span class="comment">     * 方法 testSysConfig2 调用 testSysConfig3 ，因为方法 testSysConfig2 开启了事务，所以这两个方法都在事务中。</span></span><br><span class="line"><span class="comment">     * 不会回滚</span></span><br><span class="line"><span class="comment">     * 方法 testSysConfig2 的注解 <span class="doctag">@Transactional</span> 默认不捕获 检查性异常</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> entity</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSysConfig2</span><span class="params">(SendSuccessLog entity)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//事务仍然会被提交</span></span><br><span class="line">        <span class="keyword">this</span>.testSysConfig3(entity);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"sysconfig error"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@Transactional</span>(rollbackFor = Exception.class)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSysConfig3</span><span class="params">(SendSuccessLog entity)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.saveSysConfig(entity);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * =================================== 一个方法调用另一个方法（二） ================================</span></span><br><span class="line"><span class="comment">     * 方法 testSysConfig4 调用 testSysConfig5 ，因为方法 testSysConfig4 没有开启事务，所以这两个方法不在事务中。</span></span><br><span class="line"><span class="comment">     * 不会回滚</span></span><br><span class="line"><span class="comment">     * 方法 testSysConfig4 没有加事务注解，会导致 testSysConfig5 也没在事务中</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> entity</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSysConfig4</span><span class="params">(SendSuccessLog entity)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//事务仍然会被提交</span></span><br><span class="line">        <span class="keyword">this</span>.testSysConfig5(entity);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"sysconfig error"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@Transactional</span>(rollbackFor = Exception.class)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSysConfig5</span><span class="params">(SendSuccessLog entity)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.saveSysConfig(entity);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"sysconfig error"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述定义了2种类型的事务示例</p>
+<blockquote>
+<p>展示了不会回滚的3种情况</p>
+</blockquote>
+<h5 id="一个方法"><a href="#一个方法" class="headerlink" title="一个方法"></a>一个方法</h5><p><code>testSysConfig1</code>方法中，添加注解<code>@Transactional</code>，出现<code>Exception</code>异常不会回滚，因为默认只对<code>RuntimeException</code>回滚</p>
+<h5 id="两个方法"><a href="#两个方法" class="headerlink" title="两个方法"></a>两个方法</h5><p>1.<code>testSysConfig2</code>方法中，开启事务注解<code>@Transactional</code>，<code>testSysConfig3</code>方法中也开启事务注解<code>@Transactional</code>，同时捕获<code>Exception</code>异常。这里的两个方法会产生事务传递，由于<code>testSysConfig2</code>方法开启事务，所以这两个方法处于同一个事务中。但是<code>testSysConfig2</code>方法并没有捕获<code>Exception</code>异常，这里依然不会回滚</p>
+<p>2.<code>testSysConfig4</code>方法和<code>testSysConfig5</code>方法中都没有开启事务，所以这两个方法不在事务中，不会回滚</p>
+<p>对于常用的Spring的@Transactional的总结如下：</p>
+<ul>
+<li>异常在A方法内抛出，则A方法就得加注解</li>
+<li>多个方法嵌套调用，如果都有 @Transactional 注解，则产生事务传递，默认 Propagation.REQUIRED</li>
+<li>如果注解上只写 @Transactional  默认只对 RuntimeException 回滚，而非 Exception 进行回滚</li>
+<li>如果要对 checked Exceptions 进行回滚，则需要 @Transactional(rollbackFor = Exception.class)</li>
+</ul>
+<h3 id="事务详解"><a href="#事务详解" class="headerlink" title="事务详解"></a>事务详解</h3><p>指定不同的事务管理器之后，还能对事务进行隔离级别和传播行为的控制，下面分别详细解释：</p>
+<h4 id="事务管理器"><a href="#事务管理器" class="headerlink" title="事务管理器"></a>事务管理器</h4><h5 id="Spring-data-jpa支持"><a href="#Spring-data-jpa支持" class="headerlink" title="Spring-data-jpa支持"></a>Spring-data-jpa支持</h5><p>新增对第一数据源的JPA配置，注意两处注释的地方，用于指定数据源对应的<code>Entity</code>实体和<code>Repository</code>定义位置，用<code>@Primary</code>区分主数据源。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableTransactionManagement</span></span><br><span class="line"><span class="meta">@EnableJpaRepositories</span>(</span><br><span class="line">        entityManagerFactoryRef=<span class="string">"entityManagerFactoryPrimary"</span>,</span><br><span class="line">        transactionManagerRef=<span class="string">"transactionManagerPrimary"</span>,</span><br><span class="line">        basePackages= &#123; <span class="string">"com.didispace.domain.p"</span> &#125;) <span class="comment">//设置Repository所在位置</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PrimaryConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span> <span class="meta">@Qualifier</span>(<span class="string">"primaryDataSource"</span>)</span><br><span class="line">    <span class="keyword">private</span> DataSource primaryDataSource;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Primary</span></span><br><span class="line">    <span class="meta">@Bean</span>(name = <span class="string">"entityManagerPrimary"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> EntityManager <span class="title">entityManager</span><span class="params">(EntityManagerFactoryBuilder builder)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> entityManagerFactoryPrimary(builder).getObject().createEntityManager();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Primary</span></span><br><span class="line">    <span class="meta">@Bean</span>(name = <span class="string">"entityManagerFactoryPrimary"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> LocalContainerEntityManagerFactoryBean <span class="title">entityManagerFactoryPrimary</span> <span class="params">(EntityManagerFactoryBuilder builder)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> builder</span><br><span class="line">                .dataSource(primaryDataSource)</span><br><span class="line">                .properties(getVendorProperties(primaryDataSource))</span><br><span class="line">                .packages(<span class="string">"com.didispace.domain.p"</span>) <span class="comment">//设置实体类所在位置</span></span><br><span class="line">                .persistenceUnit(<span class="string">"primaryPersistenceUnit"</span>)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JpaProperties jpaProperties;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> Map&lt;String, String&gt; <span class="title">getVendorProperties</span><span class="params">(DataSource dataSource)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> jpaProperties.getHibernateProperties(dataSource);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Primary</span></span><br><span class="line">    <span class="meta">@Bean</span>(name = <span class="string">"transactionManagerPrimary"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> PlatformTransactionManager <span class="title">transactionManagerPrimary</span><span class="params">(EntityManagerFactoryBuilder builder)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> JpaTransactionManager(entityManagerFactoryPrimary(builder).getObject());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>新增对第二数据源的JPA配置，内容与第一数据源类似，具体如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableTransactionManagement</span></span><br><span class="line"><span class="meta">@EnableJpaRepositories</span>(</span><br><span class="line">        entityManagerFactoryRef=<span class="string">"entityManagerFactorySecondary"</span>,</span><br><span class="line">        transactionManagerRef=<span class="string">"transactionManagerSecondary"</span>,</span><br><span class="line">        basePackages= &#123; <span class="string">"com.didispace.domain.s"</span> &#125;) <span class="comment">//设置Repository所在位置</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SecondaryConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span> <span class="meta">@Qualifier</span>(<span class="string">"secondaryDataSource"</span>)</span><br><span class="line">    <span class="keyword">private</span> DataSource secondaryDataSource;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span>(name = <span class="string">"entityManagerSecondary"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> EntityManager <span class="title">entityManager</span><span class="params">(EntityManagerFactoryBuilder builder)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> entityManagerFactorySecondary(builder).getObject().createEntityManager();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span>(name = <span class="string">"entityManagerFactorySecondary"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> LocalContainerEntityManagerFactoryBean <span class="title">entityManagerFactorySecondary</span> <span class="params">(EntityManagerFactoryBuilder builder)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> builder</span><br><span class="line">                .dataSource(secondaryDataSource)</span><br><span class="line">                .properties(getVendorProperties(secondaryDataSource))</span><br><span class="line">                .packages(<span class="string">"com.didispace.domain.s"</span>) <span class="comment">//设置实体类所在位置</span></span><br><span class="line">                .persistenceUnit(<span class="string">"secondaryPersistenceUnit"</span>)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JpaProperties jpaProperties;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> Map&lt;String, String&gt; <span class="title">getVendorProperties</span><span class="params">(DataSource dataSource)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> jpaProperties.getHibernateProperties(dataSource);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span>(name = <span class="string">"transactionManagerSecondary"</span>)</span><br><span class="line">    <span class="function">PlatformTransactionManager <span class="title">transactionManagerSecondary</span><span class="params">(EntityManagerFactoryBuilder builder)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> JpaTransactionManager(entityManagerFactorySecondary(builder).getObject());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>完成了以上配置之后，主数据源的实体和数据访问对象位于：<code>com.didispace.domain.p</code>，次数据源的实体和数据访问接口位于：<code>com.didispace.domain.s</code>。</p>
+<p>分别在这两个package下创建各自的实体和数据访问接口</p>
+<ul>
+<li>主数据源下，创建User实体和对应的Repository接口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="meta">@GeneratedValue</span></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column</span>(nullable = <span class="keyword">false</span>)</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column</span>(nullable = <span class="keyword">false</span>)</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(String name, Integer age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 省略getter、setter</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserRepository</span> <span class="keyword">extends</span> <span class="title">JpaRepository</span>&lt;<span class="title">User</span>, <span class="title">Long</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>从数据源下，创建Message实体和对应的Repository接口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Message</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="meta">@GeneratedValue</span></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column</span>(nullable = <span class="keyword">false</span>)</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column</span>(nullable = <span class="keyword">false</span>)</span><br><span class="line">    <span class="keyword">private</span> String content;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Message</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Message</span><span class="params">(String name, String content)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.content = content;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 省略getter、setter</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MessageRepository</span> <span class="keyword">extends</span> <span class="title">JpaRepository</span>&lt;<span class="title">Message</span>, <span class="title">Long</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来通过测试用例来验证使用这两个针对不同数据源的配置进行数据操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner.class)</span><br><span class="line"><span class="meta">@SpringApplicationConfiguration</span>(Application.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationTests</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> UserRepository userRepository;</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> MessageRepository messageRepository;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">		userRepository.save(<span class="keyword">new</span> User(<span class="string">"aaa"</span>, <span class="number">10</span>));</span><br><span class="line">		userRepository.save(<span class="keyword">new</span> User(<span class="string">"bbb"</span>, <span class="number">20</span>));</span><br><span class="line">		userRepository.save(<span class="keyword">new</span> User(<span class="string">"ccc"</span>, <span class="number">30</span>));</span><br><span class="line">		userRepository.save(<span class="keyword">new</span> User(<span class="string">"ddd"</span>, <span class="number">40</span>));</span><br><span class="line">		userRepository.save(<span class="keyword">new</span> User(<span class="string">"eee"</span>, <span class="number">50</span>));</span><br><span class="line"></span><br><span class="line">		Assert.assertEquals(<span class="number">5</span>, userRepository.findAll().size());</span><br><span class="line"></span><br><span class="line">		messageRepository.save(<span class="keyword">new</span> Message(<span class="string">"o1"</span>, <span class="string">"aaaaaaaaaa"</span>));</span><br><span class="line">		messageRepository.save(<span class="keyword">new</span> Message(<span class="string">"o2"</span>, <span class="string">"bbbbbbbbbb"</span>));</span><br><span class="line">		messageRepository.save(<span class="keyword">new</span> Message(<span class="string">"o3"</span>, <span class="string">"cccccccccc"</span>));</span><br><span class="line"></span><br><span class="line">		Assert.assertEquals(<span class="number">3</span>, messageRepository.findAll().size());</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h4><p>隔离级别是指若干个并发的事务之间的隔离程度，与我们开发时候主要相关的场景包括：脏读取、重复读、幻读。</p>
+<p>我们可以看<code>org.springframework.transaction.annotation.Isolation</code>枚举类中定义了五个表示隔离级别的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public enum Isolation &#123;</span><br><span class="line">    DEFAULT(-1),</span><br><span class="line">    READ_UNCOMMITTED(1),</span><br><span class="line">    READ_COMMITTED(2),</span><br><span class="line">    REPEATABLE_READ(4),</span><br><span class="line">    SERIALIZABLE(8);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>DEFAULT</code>：这是默认值，表示使用底层数据库的默认隔离级别。对大部分数据库而言，通常这值就是：<code>READ_COMMITTED</code>。</li>
+<li><code>READ_UNCOMMITTED</code>：该隔离级别表示一个事务可以读取另一个事务修改但还没有提交的数据。该级别不能防止脏读和不可重复读，因此很少使用该隔离级别。</li>
+<li><code>READ_COMMITTED</code>：该隔离级别表示一个事务只能读取另一个事务已经提交的数据。该级别可以防止脏读，这也是大多数情况下的推荐值。</li>
+<li><code>REPEATABLE_READ</code>：该隔离级别表示一个事务在整个过程中可以多次重复执行某个查询，并且每次返回的记录都相同。即使在多次查询之间有新增的数据满足该查询，这些新增的记录也会被忽略。该级别可以防止脏读和不可重复读。</li>
+<li><code>SERIALIZABLE</code>：所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，该级别可以防止脏读、不可重复读以及幻读。但是这将严重影响程序的性能。通常情况下也不会用到该级别。</li>
+</ul>
+<p>指定方法：通过使用<code>isolation</code>属性设置，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Transactional(isolation = Isolation.DEFAULT)</span><br></pre></td></tr></table></figure>
+
+<h4 id="传播行为"><a href="#传播行为" class="headerlink" title="传播行为"></a>传播行为</h4><p>所谓事务的传播行为是指，如果在开始当前事务之前，一个事务上下文已经存在，此时有若干选项可以指定一个事务性方法的执行行为。</p>
+<p>我们可以看<code>org.springframework.transaction.annotation.Propagation</code>枚举类中定义了6个表示传播行为的枚举值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public enum Propagation &#123;</span><br><span class="line">    REQUIRED(0),</span><br><span class="line">    SUPPORTS(1),</span><br><span class="line">    MANDATORY(2),</span><br><span class="line">    REQUIRES_NEW(3),</span><br><span class="line">    NOT_SUPPORTED(4),</span><br><span class="line">    NEVER(5),</span><br><span class="line">    NESTED(6);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>REQUIRED</code>：如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。</li>
+<li><code>SUPPORTS</code>：如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。</li>
+<li><code>MANDATORY</code>：如果当前存在事务，则加入该事务；如果当前没有事务，则抛出异常。</li>
+<li><code>REQUIRES_NEW</code>：创建一个新的事务，如果当前存在事务，则把当前事务挂起。</li>
+<li><code>NOT_SUPPORTED</code>：以非事务方式运行，如果当前存在事务，则把当前事务挂起。</li>
+<li><code>NEVER</code>：以非事务方式运行，如果当前存在事务，则抛出异常。</li>
+<li><code>NESTED</code>：如果当前存在事务，则创建一个事务作为当前事务的嵌套事务来运行；如果当前没有事务，则该取值等价于<code>REQUIRED</code>。</li>
+</ul>
+<p>指定方法：通过使用<code>propagation</code>属性设置，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@Transactional(propagation = Propagation.REQUIRED)</span><br></pre></td></tr></table></figure>
+
+<h5 id="事务配置示例"><a href="#事务配置示例" class="headerlink" title="事务配置示例"></a>事务配置示例</h5><p>Spring默认情况下会对运行期例外(RunTimeException)，即uncheck异常，进行事务回滚。</p>
+<p>如果遇到checked异常就不回滚。<br>如何改变默认规则：</p>
+<ul>
+<li><p>让checked例外也回滚：在整个方法前加上 @Transactional(rollbackFor=Exception.class)</p>
+</li>
+<li><p>让unchecked例外不回滚： @Transactional(notRollbackFor=RunTimeException.class)</p>
+</li>
+<li><p>不需要事务管理的(只查询的)方法：@Transactional(propagation=Propagation.NOT_SUPPORTED)</p>
+</li>
+</ul>
+<h5 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h5><ol>
+<li><p>在需要事务管理的地方加@Transactional 注解。@Transactional 注解可以被应用于接口定义和接口方法、类定义和类的 public 方法上 。</p>
+</li>
+<li><p>@Transactional 注解只能应用到 public 可见度的方法上 。 如果你在 protected、private 或者 package-visible 的方法上使用 @Transactional 注解，它也不会报错， 但是这个被注解的方法将不会展示已配置的事务设置。</p>
+</li>
+<li><p>通过 元素的 “proxy-target-class” 属性值来控制是基于接口的还是基于类的代理被创 建。 如果 “proxy-target-class” 属值被设置为 “true”，那么基于类的代理将起作用（这时需要CGLIB库cglib.jar在CLASSPATH中）。如果 “proxy-target-class” 属值被设置为 “false” 或者这个属性被省略，那么标准的JDK基于接口的代理将起作用。注解@Transactional cglib与java动态代理最大区别是代理目标对象不用实现接口, 那么注解要是写到接口方法上，要是使用cglib代理，这是注解事物就失效了，为了保持兼容注解最好都写到实现类方法上。</p>
+</li>
+</ol>
+<h3 id="异常详解"><a href="#异常详解" class="headerlink" title="异常详解"></a>异常详解</h3><blockquote>
+<p>那么什么是检查型异常什么又是非检查型异常呢？</p>
+</blockquote>
+<p>最简单的判断点有两个：</p>
+<ol>
+<li><p>继承自runtimeexception或error的是非检查型异常，而继承自exception的则是检查型异常（当然，runtimeexception本身也是exception的子类）。</p>
+</li>
+<li><p>对非检查型类异常可以不用捕获，而检查型异常则必须用try语句块进行处理或者把异常交给上级方法处理总之就是必须写代码处理它。所以必须在service捕获异常，然后再次抛出，这样事务方才起效。</p>
+</li>
+</ol>
+<h4 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h4><p><img src="https://upload-images.jianshu.io/upload_images/539247-37d0da9acf154478.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1566810895.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="meta">@Transactional</span>(readOnly = <span class="keyword">true</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleJpaRepository</span>&lt;<span class="title">T</span>, <span class="title">ID</span>&gt; <span class="keyword">implements</span> <span class="title">JpaRepositoryImplementation</span>&lt;<span class="title">T</span>, <span class="title">ID</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String ID_MUST_NOT_BE_NULL = <span class="string">"The given id must not be null!"</span>;</span><br><span class="line">	</span><br><span class="line">	…………</span><br><span class="line">   	</span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deleteById</span><span class="params">(ID id)</span> </span>&#123;</span><br><span class="line">		Assert.notNull(id, ID_MUST_NOT_BE_NULL);</span><br><span class="line">		delete(findById(id).orElseThrow(() -&gt; <span class="keyword">new</span> EmptyResultDataAccessException(</span><br><span class="line">				String.format(<span class="string">"No %s entity with id %s exists!"</span>, entityInformation.getJavaType(), id), <span class="number">1</span>)));</span><br><span class="line">	&#125;</span><br><span class="line">    	</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> T <span class="title">getOne</span><span class="params">(ID id)</span> </span>&#123;</span><br><span class="line">		Assert.notNull(id, ID_MUST_NOT_BE_NULL);</span><br><span class="line">		<span class="keyword">return</span> em.getReference(getDomainClass(), id);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>SimpleJpaRepository</code>在类上添加注解<code>@Transactional(readOnly = true)</code>，默认<code>get*</code>开头的方法都是只读模式，不能更新，删除，而<code>save*</code>,<code>delete*</code>等方法都再次添加注解<code>@Transactional</code>，<code>readOnly</code>默认值为<code>false</code></p>
+<p>以上有部分内容参考<a href="http://blog.didispace.com/springbootmultidatasource/" target="_blank" rel="noopener">Spring Boot多数据源配置与使用</a></p>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+	<span class="ico-folder"></span>
+    <a class="article-category-link" href="/categories/blog/">blog</a>
+
+      
+  <span class="ico-tags"></span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jpa/">jpa</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/springboot/">springboot</a></li></ul>
+
+      
+        
+	<div id="comment">
+		<!-- 来必力City版安装代码 -->
+		<div id="lv-container" data-id="city" data-uid="MTAyMC80NTk0OC8yMjQ1OQ==">
+		<script type="text/javascript">
+		   (function(d, s) {
+		       var j, e = d.getElementsByTagName(s)[0];
+
+		       if (typeof LivereTower === 'function') { return; }
+
+		       j = d.createElement(s);
+		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+		       j.async = true;
+
+		       e.parentNode.insertBefore(j, e);
+		   })(document, 'script');
+		</script>
+		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+		</div>
+		<!-- City版安装代码已完成 -->
+	</div>
+
+
+
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/06/10/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/08/26/spring boot/Spring Boot系列（一）Spring-data-jpa访问数据/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Spring Boot系列（一）Spring-data-jpa 访问数据</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- Table of Contents -->
+
+  <aside id="sidebar">
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">Contents</strong>
+    
+      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-data-jpa-事务机制"><span class="nav-number">1.</span> <span class="nav-text">Spring-data-jpa 事务机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是事务？"><span class="nav-number">1.1.</span> <span class="nav-text">什么是事务？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#快速入门"><span class="nav-number">1.2.</span> <span class="nav-text">快速入门</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#单元测试"><span class="nav-number">1.2.1.</span> <span class="nav-text">单元测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建实体"><span class="nav-number">1.2.2.</span> <span class="nav-text">创建实体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建数据访问接口"><span class="nav-number">1.2.3.</span> <span class="nav-text">创建数据访问接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义service层接口"><span class="nav-number">1.2.4.</span> <span class="nav-text">定义service层接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义service层接口实现"><span class="nav-number">1.2.5.</span> <span class="nav-text">定义service层接口实现</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#一个方法"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">一个方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#两个方法"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">两个方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务详解"><span class="nav-number">1.3.</span> <span class="nav-text">事务详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事务管理器"><span class="nav-number">1.3.1.</span> <span class="nav-text">事务管理器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Spring-data-jpa支持"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">Spring-data-jpa支持</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隔离级别"><span class="nav-number">1.3.2.</span> <span class="nav-text">隔离级别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#传播行为"><span class="nav-number">1.3.3.</span> <span class="nav-text">传播行为</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#事务配置示例"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">事务配置示例</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#注意事项"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">注意事项</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常详解"><span class="nav-number">1.4.</span> <span class="nav-text">异常详解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#源码分析"><span class="nav-number">1.4.1.</span> <span class="nav-text">源码分析</span></a></li></ol></li></ol></li></ol>
+    
+    </div>
+  </aside>
+</section>
+        
+      </div>
+
+    </div>
+    <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/categories" class="mobile-nav-link">Categories</a>
+  
+    <a href="/tags" class="mobile-nav-link">Tags</a>
+  
+    <a href="/about" class="mobile-nav-link">About</a>
+  
+</nav> -->
+    <footer id="footer" class="site-footer">
+  
+
+  <div class="clearfix container">
+      <div class="site-info">
+	      &copy; 2021 DaDa GOUGOU All Rights Reserved.
+        
+            <span id="busuanzi_container_site_uv">
+              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
+              本站总访问量<span id="busuanzi_value_site_pv"></span>次
+            </span>
+          
+      </div>
+      <div class="site-credit">
+        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
+      </div>
+  </div>
+</footer>
+
+
+<!-- min height -->
+
+<script>
+    var wrapdiv = document.getElementById("wrap");
+    var contentdiv = document.getElementById("content");
+
+    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
+
+
+    <!-- headerblur min height -->
+    
+      var headerblur = document.getElementById("header-blur");
+      headerblur.style.minHeight = window.getComputedStyle(document.getElementById("allheader"), null).height;
+    
+    
+</script>
+    
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="https://s95.cnzz.com/z_stat.php?id=1277912853&web_id=1277912853" language="JavaScript"></script>
+  </div>
+
+
+
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+
+
+
+
+
+
+  </div>
+
+  <a id="rocket" href="#top" class=""></a>
+  <script type="text/javascript" src="/js/totop.js" async=""></script>
+</body>
+</html>
